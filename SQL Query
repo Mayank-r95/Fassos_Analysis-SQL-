@@ -166,24 +166,6 @@ group by customer_id
 ------------------------------------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$------------------------------------------------------------------------------------
 select * from customer_orders
 
--- Q For each customer how many delivered roles had atleast 1 change in rolls and how many had no change in rolls?
-
-with customer_orders_new as (
-select order_id,customer_id,roll_id,order_date,case when not_include_items is Null then '0' 
-when not_include_items='' then '0' 
-else not_include_items end as not_include_item,
-case when extra_items_included is null then '0'
-when extra_items_included in ('','NaN') then '0' 
-else extra_items_included end as extra_item_included
-from customer_orders)
-select distinct(customer_id),case when not_include_item = '0' and extra_item_included='0' then 'No Change' else 'Change' end as status 
-from customer_orders_new
-order by status asc
-
--- Insights --Here we use the concept of case statment and with clause with that we clean and organised data and get the output of those customer who had change in rolls and no change in rolls
-
-------------------------------------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$------------------------------------------------------------------------------------
-------------------------------------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$------------------------------------------------------------------------------------
 
 -- Q How many rolls were delivered that had both exlusion and extraes ?
 
